@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd LaunchAgent template.
+
+  Before installing:
+    1. Replace EVERY <YOUR_*> placeholder below.
+    2. Save as ~/Library/LaunchAgents/com.<your-id>.claude-telegram-bot.plist
+    3. chmod 600 the installed copy (it contains your API token).
+    4. Load:
+         launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.<your-id>.claude-telegram-bot.plist
+
+  Notes:
+    - PATH must include the directory containing the `claude` and `python3` binaries.
+      Defaults below cover common locations (~/.local/bin, /opt/homebrew/bin, etc.).
+    - HOME must be set so that claude finds ~/.claude/settings.json.
+    - ANTHROPIC_BASE_URL is only required if you use a custom (third-party)
+      Claude API endpoint. Remove the key if you use Anthropic's official API
+      with ANTHROPIC_API_KEY in ~/.claude/settings.json.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.YOUR_ID.claude-telegram-bot</string>
+
+    <key>Program</key>
+    <string>/Users/YOUR_USERNAME/code/claude-telegram-bot/run.sh</string>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/YOUR_USERNAME/code/claude-telegram-bot</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+        <key>Crashed</key>
+        <true/>
+    </dict>
+
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/YOUR_USERNAME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>HOME</key>
+        <string>/Users/YOUR_USERNAME</string>
+        <key>ANTHROPIC_BASE_URL</key>
+        <string>YOUR_THIRD_PARTY_API_ENDPOINT_OR_DELETE_THIS_KEY</string>
+        <key>ANTHROPIC_AUTH_TOKEN</key>
+        <string>YOUR_API_TOKEN</string>
+        <key>CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC</key>
+        <string>1</string>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/YOUR_USERNAME/code/claude-telegram-bot/logs/stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/YOUR_USERNAME/code/claude-telegram-bot/logs/stderr.log</string>
+</dict>
+</plist>

@@ -1,0 +1,25 @@
+# Secrets — never commit
+config.json
+*.token
+
+# Runtime state
+sessions.json
+downloads/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.python-version
+
+# launchd plist with real credentials
+# (template `com.example.claude-telegram-bot.plist` is committed; live one with token is not)
+com.*.claude-telegram-bot.live.plist
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp

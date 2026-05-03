@@ -1,0 +1,9 @@
+{
+  "bot_token": "REPLACE_WITH_BOTFATHER_TOKEN",
+  "allowed_user_ids": [123456789],
+  "working_dir": "/Users/zzzztl",
+  "claude_args": ["--permission-mode", "bypassPermissions"],
+  "max_response_chars": 4000,
+  "subprocess_timeout_seconds": 600,
+  "downloads_retention_days": 7
+}
