@@ -611,6 +611,12 @@ tail -f ~/code/claude-telegram-bot/logs/stderr.log
 └── _post_init 里 asyncio.create_task(_cleanup_loop()) 没持有引用，
     bot 关闭时被强销。无功能影响。修：保留引用 + post_shutdown 取消。
 
+症状：claude 流中途报 `LimitOverrunError` / `ValueError: Separator is not found`
+└── stream-json 中某条事件单行超过 asyncio 的 stdout buffer 上限。
+    bot.py 已在 create_subprocess_exec 设 `limit=16*1024*1024`（16 MB），
+    覆盖默认的 64 KB。如仍触发说明单条事件 >16 MB（极少见，可能是
+    巨大的 tool_result），按需调高这个常数。
+
 症状：BadRequest "draft" / "not supported"
 ├── Telegram 客户端版本太旧（不支持 sendMessageDraft 渲染）
 │   └── bot 已自动 fallback 到 editMessageText，仍能用，只是没原生动画

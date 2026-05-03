@@ -394,6 +394,10 @@ async def stream_claude(prompt: str, user_id: int, renderer: StreamRenderer) -> 
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
             env=os.environ.copy(),
+            # 16 MB per-line buffer; some stream-json events (e.g. large
+            # tool_result content blocks) exceed asyncio's default 64 KB
+            # and would raise LimitOverrunError mid-stream.
+            limit=16 * 1024 * 1024,
         )
     except FileNotFoundError:
         return "找不到 claude 命令（检查 PATH）"
